@@ -1,0 +1,76 @@
+package OTHELLO_game;
+
+public class board {
+	
+private int[][] Board;
+final static int P1Symbol = 1;
+final static int P2Symbol = 2;
+private static int[] xDIR = { -1 , -1 , 0 , 1 , 1 , 1 , 0 , -1};
+private static int[] yDIR = { 0 , 1 , 1 , 1 , 0 , -1 , -1 , -1};
+
+public board() {
+	Board = new int[8][8];
+	Board[3][3] = P1Symbol;
+	Board[3][4] = P2Symbol;
+	Board[4][3] = P2Symbol;
+	Board[4][4] = P1Symbol;
+    }
+
+public void print() {
+	for(int i = 0; i < 8; i++) {
+		System.out.println("---------------");
+		for(int j = 0; j < 8; j++) {
+			System.out.print(Board[i][j] + " ");
+		}
+		System.out.println();
+	}
+	System.out.println("----------------");
+}
+
+public boolean move(int symbol , int x , int y) {
+	 if(x < 0 || x >= 8 || y < 0 || y >= 8 || Board[x][y] != 0){
+	        return false;
+	        }
+	 boolean movePossible = false;
+     for(int i = 0; i < xDIR.length; i++){
+    	 int xStep = xDIR[i];
+    	 int yStep = yDIR[i];
+    	 
+    	int currentX = x + xStep;
+    	int currentY = y + yStep;
+    	
+    	int count = 0; // count of opponent's pieces encountered
+    	
+    	while(currentX >= 0 && currentX < 8 && currentY >= 0 && currentY < 8){
+    	// Empty cell
+    		if(Board[currentX][currentY] == 0)
+    	    	break;
+    		
+    	    if(Board[currentX][currentY] != symbol){
+    	    	currentX += xStep;
+    	    	currentY += yStep;
+    	    	count++;
+    	    }else if(Board[currentX][currentY] == symbol){
+    	    	// conversion is possible
+    	    	if(count > 0){
+    	    	movePossible = true;
+    	    	
+    	    	int convertX = currentX - xStep;
+    	    	int convertY = currentY - yStep;
+    	    	
+    	    	while(convertX != x || convertY != y){
+    	    		Board[convertX][convertY] = symbol;
+        	    	convertX = convertX - xStep;
+        	    	convertY = convertY - yStep;
+        	    	   }
+    	    	}
+    	    	break;
+    	        }
+    	      }
+    	    }
+    	    if(movePossible){
+    	    Board[x][y] =symbol;
+    	      }
+    	    return movePossible;
+    	     }
+    	   }

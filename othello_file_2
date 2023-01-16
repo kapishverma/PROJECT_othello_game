@@ -1,0 +1,36 @@
+package OTHELLO_game;
+import java.util.Scanner;
+public class othello {
+	
+private static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) {
+     board b = new board();
+     System.out.println("Please enter an valid even number (n>1 && n<=64)");
+     int n = s.nextInt();
+     b.print();
+     while(n>0) {
+    	 boolean ans = false;
+    	 if(n%2==0) {
+    		 System.out.println("Player_1's turn");
+    		 int x = s.nextInt();
+    		 int y = s.nextInt();
+    		 ans = b.move(b.P1Symbol , x , y);
+    	 }else if(n%2==1) {
+    		 System.out.println("Player_2's turn");
+    		 int x = s.nextInt();
+    		 int y = s.nextInt();
+    		 ans = b.move(b.P2Symbol , x , y); 
+    	 }
+    	 if(ans) {
+    		 b.print();
+    		 n--;
+    	 }else if(!ans){
+    		 System.out.println("INVALID MOVE!!! , Please enter again");
+    		 continue;
+    	 }
+       }
+		
+	}
+
+}
